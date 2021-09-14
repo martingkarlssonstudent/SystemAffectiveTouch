@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<class name="MLExt" description="MLExts">
+
+	<description type="text">
+		Classifies the type of touch. By taking input from the TouchBoard via the TouchBoardInput module
+	</description>
+
+	<example description="A simple example">
+	<module
+		class="MLExt"
+		name="MLExt"
+	/>
+	</example>
+
+	<input
+		name="TOUCHID_INPUT"
+		description="Touch identification input."
+		size_x = "1200"
+		size_y = "1"
+	/>
+
+	<output
+		name="TOUCHCERTAINTY_OUTPUT"
+		description="Touch classification certainty output."
+		size_x = "10"
+		size_y = "1"
+	/>
+
+	<input
+		name="TOUCHACTIVE_INPUT"
+		description="Input from module TouchId. Touch active."
+	/>
+	<output name="TOUCHACTIVE_OUTPUT" description="Touch active." size="1" />
+
+	<link class="MLExt" />
+
+  <parameter name="noTouchTypes" type="int" default="1" description="N.o. touch types" />
+	<parameter name="touchCertaintyCutoff" type="float" default="0" description="Touch certainty cut-off" />
+
+
+	<reference>
+		Test.
+	</reference>
+
+	<author>
+		<name>Martin Karlsson</name>
+		<_email></_email>
+		<affiliation>LUCS</affiliation>
+	</author>
+
+	<files>
+		<file>MLExt.h</file>
+		<file>MLExt.cc</file>
+		<file>MLExt.ikc</file>
+	</files>
+
+</class>

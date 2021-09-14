@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<group title = "MLExt">
+
+  <module
+    class="MLExt"
+    name="MLExt"
+    touchType="0"
+  />
+
+  <connection source = "TouchId.TOUCHID_OUTPUT" target = "MLExt.TOUCHID_INPUT"/>
+  <connection source = "TouchId.TOUCHACTIVE_OUTPUT" target = "MLExt.TOUCHACTIVE_INPUT"/>
+
+</group>

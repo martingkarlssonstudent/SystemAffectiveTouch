@@ -1,0 +1,28 @@
+//
+//  TouchBoardI.h
+
+#ifndef TouchBoardI_
+#define TouchBoardI_
+
+#include "IKAROS.h"
+
+
+class TouchBoardI: public Module
+{
+public:
+    static Module *Create(Parameter * p) { return new TouchBoardI(p); }
+    TouchBoardI(Parameter * p) : Module(p) {}
+    virtual ~TouchBoardI();
+
+    void Init();
+    void Tick();
+
+    Serial *SerialPort;
+    char * rcvmsg;
+    int noTicks;
+    int noElectrodes;
+    std::string touchStr;
+    float *	touchSignalOutput_array;
+};
+
+#endif

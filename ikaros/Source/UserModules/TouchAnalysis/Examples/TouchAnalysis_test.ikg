@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+
+<group title = "TouchAnalysis">
+
+  <module
+    class="TouchBoardI"
+    name="TouchBoardI"
+    port="/dev/ttyACM1"
+  />
+
+  <module
+    class="TouchId"
+    name="TouchId"
+    touchType="0"
+  />
+
+  <module
+    class="MLExt"
+    name="MLExt"
+    touchType="0"
+  />
+
+  <module
+    class="TouchAnalysis"
+    name="TouchAnalysis"
+    touchType="0"
+  />
+
+  <module
+      class="Constant"
+      name="TouchEmotion_Data"
+      data = "0 0.61 0.01 0 0 0.4 0.03 0.61 0.73 0.63;
+      0 0 0.45 0.43 0.63 0.38 0.65 0.58 0.38 0.29;
+      0 0.08 0.19 0.22 0.45 0.21 0.19 0.16 0.28 0.21;
+      0 0.31 0.59 0.56 0.89 0.29 0.46 0.16 0.01 0.05;
+      0 0.37 0.28 0.47 0.6 0.18 0.31 0.34 0.05 0.1;
+      0 0.15 0.29 0.36 0.41 0.16 0.31 0.14 0.08 0.06"
+  />
+
+  <module
+      class="Constant"
+      name="TouchEmotionCutOff_Data"
+      data = "0 0.61 0.01 0 0 0.4 0.03 0.61 0.73 0.63;
+      0 0 0.45 0.43 0.63 0.38 0.65 0.58 0.38 0.29;
+      0 0.08 0.19 0.22 0.45 0.21 0.19 0.16 0.28 0.21;
+      0 0.31 0.59 0.56 0.89 0.29 0.46 0.16 0.01 0.05;
+      0 0.37 0.28 0.47 0.6 0.18 0.31 0.34 0.05 0.1;
+      0 0.15 0.29 0.36 0.41 0.16 0.31 0.14 0.08 0.06"
+  />
+
+  <module
+      class="Constant"
+      name="EmotionRGB_Data"
+      data = "64 48 25 200 94 139;
+      224 144 25 8 8 165;
+      208 127 112 21 68 143"
+  />
+
+  <module
+      class="Constant"
+      name="EmotionFactor_Data"
+      data = "0.8 0.4 1 0.95 0.9 0.85"
+  />
+
+  <module
+      class="Constant"
+      name="EmotionPupilSize_Data"
+      data = "15 18 6 6 18 0;"
+  />
+
+  <connection source = "TouchBoardI.TOUCHSIGNAL_OUTPUT" target = "TouchId.TOUCHSIGNAL_INPUT"/>
+  <connection source = "TouchId.TOUCHID_OUTPUT" target = "MLExt.TOUCHID_INPUT"/>
+  <connection source = "TouchId.TOUCHACTIVE_OUTPUT" target = "MLExt.TOUCHACTIVE_INPUT"/>
+  <connection source = "MLExt.TOUCHACTIVE_OUTPUT" target = "TouchAnalysis.TOUCHACTIVE_INPUT"/>
+  <connection source = "MLExt.TOUCHCERTAINTY_OUTPUT" target = "TouchAnalysis.TOUCHCERTAINTY_INPUT"/>
+  <connection  source = "TouchEmotion_Data.OUTPUT"  target = "TouchAnalysis.TOUCHEMOTION_INPUT" />
+  <connection  source = "TouchEmotionCutOff_Data.OUTPUT"  target = "TouchAnalysis.TOUCHEMOTIONCUTOFF_INPUT" />
+  <connection  source = "EmotionRGB_Data.OUTPUT"  target = "TouchAnalysis.EMOTIONRGB_INPUT" />
+  <connection  source = "EmotionFactor_Data.OUTPUT"  target = "TouchAnalysis.EMOTIONFACTOR_INPUT" />
+  <connection  source = "EmotionPupilSize_Data.OUTPUT"  target = "TouchAnalysis.EMOTIONPUPILSIZE_INPUT" />
+
+  <view name="Epi the Robot" >
+    <slider-horizontal  x = "360" y = "50" height = "50" width = "400" title = "N.o. touch types" parameter = "MLExt.noTouchTypes" select = "0" count = "1" labels = "" min = "1" max = "9" step = "1" show_values = "true" show_title = "true" show_frame = "false" style = "" frame-style = ""/>
+    <slider-horizontal  x = "360" y = "125" height = "50" width = "400" title = "Touch certainty cut-off" parameter = "MLExt.touchCertaintyCutoff" select = "0" count = "1" labels = "" min = "0" max = "1" step = "0.05" show_values = "true" show_title = "true" show_frame = "false" style = "" frame-style = ""/>
+        <slider-horizontal  x = "360" y = "200" height = "50" width = "400" title = "Touch envelope factor" parameter = "TouchId.touchIdEnvFactor" select = "0" count = "1" labels = "" min = "0" max = "100" step = "1" show_values = "true" show_title = "true" show_frame = "false" style = "" frame-style = ""/>
+    <slider-horizontal  x = "800" y = "50" height = "50" width = "400" title = "N.o. emotions" parameter = "TouchAnalysis.noEmotionsCutoff" select = "0" count = "1" labels = "" min = "1" max = "6" step = "1" show_values = "true" show_title = "true" show_frame = "false" style = "" frame-style = ""/>
+    <slider-horizontal  x = "800" y = "125" height = "50" width = "400" title = "Emotion peak time (s)" parameter = "TouchAnalysis.timeEmotionPeak" select = "0" count = "1" labels = "" min = "0" max = "360" step = "10" show_values = "true" show_title = "true" show_frame = "false" style = "" frame-style = ""/>
+    <slider-horizontal  x = "800" y = "200" height = "50" width = "400" title = "Emotion history" parameter = "TouchAnalysis.emotionHistoryFactor" select = "0" count = "1" labels = "" min = "0" max = "1" step = ".05" show_values = "true" show_title = "true" show_frame = "false" style = "" frame-style = ""/>
+    <!-- <slider-horizontal  x = "800" y = "125" height = "50" width = "400" title = "Touch Id factor" parameter = "TouchId.touchIdStageFactor" select = "0" count = "1" labels = "" min = "0" max = "10" step = "0.5" show_values = "true" show_title = "true" show_frame = "false" style = "" frame-style = ""/> -->
+
+    <bar-graph
+        x="20" y="360"
+        width="600"
+        height="301"
+        source="MLExt.TOUCHCERTAINTY_OUTPUT"
+        min="0"
+        max="1"
+        title = "Touch recognition certainty"
+        labels = "none,tap,poke,press,slap,pat,pick,hold,stroke,rub"
+        style = "--color:grey,turquoise,red,red,red,turquoise,green,turquoise,turquoise,turquoise;--fill:grey,turquoise,red,red,red,turquoise,green,turquoise,turquoise,turquoise"
+    />
+    <bar-graph
+        x="640" y="360"
+        width="600"
+        height="301"
+        source="TouchAnalysis.CERTAINTYEMOTIONTOTAL_OUTPUT"
+        min="0"
+        max="1"
+        title = "Emotion certainty"
+        labels = "enjoyment,surprise,sadness,anger,fear,disgust"
+        style = "--color:turquoise,green,blue,red,purple,envy,green;--fill:turquoise,green,blue,red,purple,envy,green"
+    />
+  	<epi-head  x = "20" irisLeftGreen = "TouchAnalysis.EPI_EYE_G" label = "Epi" pupilLeftSource = "TouchAnalysis.EPI_PUPILSIZE" irisRightGreen = "TouchAnalysis.EPI_EYE_G" y = "20" gazeSource = "" show_frame = "yes" width = "300" offsetSource = "" height = "300" irisLeftBlue = "TouchAnalysis.EPI_EYE_B" irisRightRed = "TouchAnalysis.EPI_EYE_R" show_title = "no" _visibleSource = "Enable.OUTPUT" pupilRightSource = "TouchAnalysis.EPI_PUPILSIZE" irisLeftRed = "TouchAnalysis.EPI_EYE_R" irisRightBlue = "TouchAnalysis.EPI_EYE_B" title = "Epi Head" headPosition = "" mouthRed = "" mouthGreen = "" mouthBlue = "" gaze = "0" vergence = "0" pupil = "0.5" visibleSource = "" visibleFace = "true" visibleFaceParameter = "" color = "black" fill = "white" earColor = "#0088ff" irisColor = "#88aaff" mouthColor = "#000000" style = "" frame-style = ""/>
+  </view>
+
+</group>
